@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
-import classnames from 'classnames';
+import classnames from 'classnames'
 
-import ReferenceValue from './ValuesDisplay/ReferenceValue';
-import AbsoluteValue from './ValuesDisplay/AbsoluteValue';
+import ReferenceValue from './ValuesDisplay/ReferenceValue'
+import AbsoluteValue from './ValuesDisplay/AbsoluteValue'
 
-import './Cell.css'
+import './Cell.scss'
 
 const Cell = ({ rowIdx, columnIdx, data, updateCellFn }) => {
   const getCurrentCellData = () => data[rowIdx][columnIdx] || ''
 
-  let [ mouseOver, setMouseOver ] = useState(false)
   let [ isEditing, setIsEditing ] = useState(false)
   let [ editingData, setEditingData ] = useState(getCurrentCellData())
 
   const classes = classnames({
     cell: true,
-    mouseOver,
     isEditing
   })
 
@@ -57,9 +55,8 @@ const Cell = ({ rowIdx, columnIdx, data, updateCellFn }) => {
   return (
     <div
       className={classes}
-      onMouseOver={() => setMouseOver(true) }
-      onMouseLeave={() => setMouseOver(false) }
-      onClick={() => setIsEditing(true) } >
+      onClick={() => setIsEditing(true) }
+      onFocus={() => setIsEditing(true) }>
       { isEditing ? input : getValueDisplay() }
     </div>
   )

@@ -1,6 +1,6 @@
-import './Header.css'
+import './Header.scss'
 
-const Header = ({ title }) => {
+const Header = ({ title = '' }) => {
   return (
     <div className="cell header">
       { title }

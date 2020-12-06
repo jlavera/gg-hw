@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 
 import Row from './row/Row'
+import HeaderRow from './row/headerRow/HeaderRow'
 
-import './Spreadsheet.css'
+import './Spreadsheet.scss'
 
-const Spreadsheet = () => {
-  let rowsCount = 10
-  let columnsCount = 10
+const Spreadsheet = ({ rowsCount, columnsCount }) => {
   let [ data, setData ] = useState([...Array(rowsCount)]
     .map(_ => [...Array(columnsCount)].map(_ => '')))
 
@@ -22,7 +21,7 @@ const Spreadsheet = () => {
 
   return (
     <div className="spreadsheet" key="spreadsheet">
-      <Row isHeader={true} columnsCount={columnsCount} />
+      <HeaderRow columnsCount={columnsCount} />
 
       { [...Array(rowsCount)].map((_, idx) =>
         <Row
@@ -34,7 +33,7 @@ const Spreadsheet = () => {
         />)
       }
     </div>
-  );
+  )
 }
 
 export default Spreadsheet
