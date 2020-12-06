@@ -4,7 +4,7 @@ import { indexToColumnName } from '../../utils';
 
 import './Row.css'
 
-const Row = ({ rowIdx, dataRow, isHeader = false, columnsCount, updateCellFn }) => {
+const Row = ({ rowIdx, data, isHeader = false, columnsCount, updateCellFn }) => {
   return (
     <div className="row">
       <Header title={isHeader ? '-' : rowIdx + 1} />
@@ -16,10 +16,12 @@ const Row = ({ rowIdx, dataRow, isHeader = false, columnsCount, updateCellFn }) 
               key={`header-${idx}`} 
               title={indexToColumnName(idx)} 
             />))
-      ) : (dataRow && dataRow.map((data, idx) => 
-            <Cell 
+      ) : ([...Array(columnsCount)].map((_, idx) => 
+            <Cell
               key={`cell-${rowIdx}-${idx}`}
               data={data}
+              rowIdx={rowIdx}
+              columnIdx={idx}
               updateCellFn={value => updateCellFn(rowIdx, idx)(value)}
             />
           ))

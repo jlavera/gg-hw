@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import classnames from 'classnames';
 
+import ReferenceValue from './ValuesDisplay/ReferenceValue';
+import AbsoluteValue from './ValuesDisplay/AbsoluteValue';
+
 import './Cell.css'
 
-const Cell = ({ data, updateCellFn }) => {
+const Cell = ({ rowIdx, columnIdx, data, updateCellFn }) => {
+  const getCurrentCellData = () => data[rowIdx][columnIdx] || ''
+
   let [ mouseOver, setMouseOver ] = useState(false)
   let [ isEditing, setIsEditing ] = useState(false)
-  let [ editingData, setEditingData ] = useState(data || '')
+  let [ editingData, setEditingData ] = useState(getCurrentCellData())
 
-  let classes = classnames({
+  const classes = classnames({
     cell: true,
     mouseOver,
     isEditing
@@ -21,26 +26,33 @@ const Cell = ({ data, updateCellFn }) => {
   }
 
   const cancelEdit = event => {
-    setEditingData(data || '')
+    setEditingData(getCurrentCellData())
     setIsEditing(false)
     event.preventDefault()
   }
   
   const input = (
     <input 
-    autoFocus={true}
-    value={editingData} 
-    onChange={v => setEditingData(v.target.value)}
-    onKeyDown={event => {
-      if (event.key === 'Enter' || event.key === 'Tab') {
-        // TODO: on tab move focus to right cell 
-        saveEdit(event)
-      } else if (event.key === 'Escape') {
-        cancelEdit(event)
-      }
-    }}
-    onBlur={event => cancelEdit(event)} />
+      autoFocus={true}
+      value={editingData} 
+      onChange={v => setEditingData(v.target.value)}
+      onKeyDown={event => {
+        if (event.key === 'Enter' || event.key === 'Tab') {
+          // TODO: on tab move focus to right cell 
+          saveEdit(event)
+        } else if (event.key === 'Escape') {
+          cancelEdit(event)
+        }
+      }}
+      onBlur={event => cancelEdit(event)}
+    />
   )
+
+  const getValueDisplay = () => {
+    return getCurrentCellData().startsWith('=') ? (
+      <ReferenceValue data={data} value={getCurrentCellData()} rowIdx={rowIdx} columnIdx={columnIdx} />
+    ) : (<AbsoluteValue value={getCurrentCellData()}/>)
+  }
 
   return (
     <div
@@ -48,7 +60,7 @@ const Cell = ({ data, updateCellFn }) => {
       onMouseOver={() => setMouseOver(true) }
       onMouseLeave={() => setMouseOver(false) }
       onClick={() => setIsEditing(true) } >
-      { isEditing ? input : data }
+      { isEditing ? input : getValueDisplay() }
     </div>
   )
 }

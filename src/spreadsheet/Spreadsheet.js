@@ -8,7 +8,7 @@ const Spreadsheet = () => {
   let rowsCount = 10
   let columnsCount = 10
   let [ data, setData ] = useState([...Array(rowsCount)]
-    .map(_ => [...Array(columnsCount)].map(_ => undefined)))
+    .map(_ => [...Array(columnsCount)].map(_ => '')))
 
   const updateCell = (rowIdx, colIdx) => value => {
     const copy = [...data]
@@ -28,7 +28,8 @@ const Spreadsheet = () => {
         <Row
           key={`row-${idx}`}
           rowIdx={idx}
-          dataRow={data[idx]}
+          data={data}
+          columnsCount={columnsCount}
           updateCellFn={updateCell}
         />)
       }
