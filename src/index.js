@@ -1,14 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+import reportWebVitals from './reportWebVitals'
 
 import Spreadsheet from './spreadsheet/Spreadsheet'
-import reportWebVitals from './reportWebVitals'
 
 import './index.scss'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Spreadsheet rowsCount={10} columnsCount={10} />
+    <Router>
+      <Switch>
+        <Route path="/:id?">
+          <Spreadsheet rowsCount={30} columnsCount={30} />
+        </Route>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 )

@@ -1,0 +1,17 @@
+@import '../../index';
+
+.linkbutton {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 3em;
+    height: 3em;
+    border-radius: 3em;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px 3px 5px 0px #a4a4a4;
+    cursor: pointer;
+    color: $accent-color;
+}
